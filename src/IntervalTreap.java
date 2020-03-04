@@ -55,29 +55,6 @@ public class IntervalTreap<T extends Comparable<? super T>> {
     but I think it makes sense since the nodes should not exist outside of the tree.
     We don't want to expose the nodes without some sort of abstraction.
      */
-    public static class Node {
-        int max, min;
-        public Node(int data) {
 
-        }
-        Node getParent() {
-            return null;
-        }
-        Node getLeft() {
-            return null;
-        }
-        Node getRight() {
-            return null;
-        }
-        Interval getInterv() {
-            return null;
-        }
-        int getIMax() {
-            return 0;
-        }
-        int getPriority() {
-            return 0;
-        }
-    }
 
 }
