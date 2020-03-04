@@ -37,9 +37,29 @@ public class IntervalTreap<T extends Comparable<? super T>> {
         // Assigns random priority
         Random rand = new Random();
         z.setPriority(rand.nextInt());
+
+        // If there isn't a root, then our node is the root
+        if (this.root == null) z = this.root;
+
         // Goes down the tree from the root following z.key
+        Node cur = this.root;
+
+        while (cur != null) {
+            if (z.getKey() < cur.getKey()) {
+               cur = cur.getLeft();
+            }
+            if (z.getKey() > cur.getKey()) {
+                cur = cur.getRight();
+            }
+        }
 
         // Inserts as a child of existing node
+        if (cur.getParent() != null) {
+            z.setParent(cur.getParent());
+        }
+
+        z = cur;
+
         // Performs rotations to satisfy the constraint v.priority > v.parent.priority
         //
     }
@@ -59,5 +79,4 @@ public class IntervalTreap<T extends Comparable<? super T>> {
     public Node intervalSearch(Interval i) {
         return null;
     }
-
 }
