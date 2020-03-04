@@ -1,6 +1,5 @@
 # Overview
-- Basically we are making a database that stores things like a Treap but interval
-  is the priority
+- Basically we are making a database that stores things like a Treap but we keep track of interval.  
 - Closed interval = ordered pair [a, b] s.t. a <= b
     - [a, b] is the set of real numbers between a and b (inclusively)
 - Interval database = Set of elements where each element x has an interval
