@@ -35,7 +35,7 @@ public class IntervalTreap<T extends Comparable<? super T>> {
      */
     public void intervalInsert(Node z) {
         // Assigns random priority
-
+        z.
 
         // Goes down the tree from the root following z.key
         // Inserts as a child of existing node

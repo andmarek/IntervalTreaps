@@ -5,6 +5,8 @@ public class Node {
     private int priority;
     private Node parent, left, right;
 
+
+
     public Node(int data) {
         Random rand = new Random();
         priority = rand.nextInt();
@@ -37,4 +39,25 @@ public class Node {
     int getPriority() {
         return this.priority;
     }
+
+    public void setInterval(Interval interval) {
+        this.interval = interval;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
 }
