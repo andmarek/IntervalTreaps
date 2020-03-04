@@ -2,42 +2,48 @@ import java.util.Random;
 
 public class Node {
     private Interval interval;
-    private int priority;
+    private int key, priority;
     private Node parent, left, right;
 
-
-
     public Node(int data) {
-        Random rand = new Random();
-        priority = rand.nextInt();
+        key = 0;
+        priority = 0;
         parent = null;
         left = null;
         right = null;
         interval = null;
     }
 
-    Node getParent() {
+    public int getKey() {
+        return key;
+    }
+
+    public Node getParent() {
         return this.parent;
     }
 
-    Node getLeft() {
+    public Node getLeft() {
         return this.left;
     }
 
-    Node getRight() {
+    public Node getRight() {
         return this.right;
     }
 
-    Interval getInterv() {
+    public Interval getInterv() {
         return this.interval;
     }
 
-    int getIMax() {
+    public int getIMax() {
         return 0;
     }
 
-    int getPriority() {
+    public int getPriority() {
         return this.priority;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 
     public void setInterval(Interval interval) {
