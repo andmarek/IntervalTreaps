@@ -12,7 +12,7 @@
         - intervalDelete(x): Removal obviously
 # Data Structure
 - Intervals = objects -> x = [a,b].  x.low = a, x.high = b.
-- Two objects, x and y (which are intervals) *overlap* if the union of the
+- Two objects, x and y (which are intervals) *overlap* if the
   intersection of the two != NULL.
     - if (i.low <= x.high && x.low <= i.high) { overlap = true }
 # Interval Trichotomy
