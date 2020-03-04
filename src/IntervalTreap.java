@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class IntervalTreap<T extends Comparable<? super T>> {
     private Node root;
 
@@ -32,7 +34,13 @@ public class IntervalTreap<T extends Comparable<? super T>> {
      * Adds element x, whose 'interv' field references an interval to the database
      */
     public void intervalInsert(Node z) {
+        // Assigns random priority
 
+
+        // Goes down the tree from the root following z.key
+        // Inserts as a child of existing node
+        // Performs rotations to satisfy the constraint v.priority > v.parent.priority
+        //
     }
 
     /**
@@ -50,11 +58,5 @@ public class IntervalTreap<T extends Comparable<? super T>> {
     public Node intervalSearch(Interval i) {
         return null;
     }
-
-    /* It was hard to decide whether to nest this inside the class or not,
-    but I think it makes sense since the nodes should not exist outside of the tree.
-    We don't want to expose the nodes without some sort of abstraction.
-     */
-
 
 }
