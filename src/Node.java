@@ -2,11 +2,11 @@ import java.util.Random;
 
 public class Node {
     private Interval interval;
-    private int key, priority;
+    private int iMax, priority;
     private Node parent, left, right;
 
-    public Node(int data) {
-        key = 0;
+    public Node() {
+        iMax = 0;
         priority = 0;
         parent = null;
         left = null;
@@ -14,8 +14,18 @@ public class Node {
         interval = null;
     }
 
+    //edge case Interval is empty?
+    public Node(Interval interval){
+        this.interval = interval;
+        iMax = interval.getHigh();
+        parent = null;
+        left = null;
+        right = null;
+        priority = 0;
+    }
+
     public int getKey() {
-        return key;
+        return iMax;
     }
 
     public Node getParent() {
@@ -34,18 +44,15 @@ public class Node {
         return this.interval;
     }
 
-    public int getIMax() {
-        return 0;
-    }
-
     public int getPriority() {
         return this.priority;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setIMax(int iMax) {
+        this.iMax = iMax;
     }
 
+    //if we set an interval do we need to set iMax?
     public void setInterval(Interval interval) {
         this.interval = interval;
     }

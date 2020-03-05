@@ -45,6 +45,12 @@ public class IntervalTreap {
         Random rand = new Random();
         z.setPriority(rand.nextInt());
 
+        // if the tree is null
+        if(root == null){
+            root = z;
+            return;
+        }
+
         // Goes down the tree from the root following z.key
         Node cur = this.root;
         Node prev = null;
