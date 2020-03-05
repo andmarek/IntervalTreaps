@@ -2,12 +2,14 @@ import java.util.Random;
 
 public class IntervalTreap {
     private Node root;
+    private int size;
 
     /**
      *  Default constructor.
      */
     public IntervalTreap() {
         this.root = null;
+        size = 0;
     }
 
     /**
@@ -16,6 +18,7 @@ public class IntervalTreap {
      */
     public IntervalTreap(Node root) {
         this.root = root;
+        size = 1;
     }
     /**
      * Getter method to return the root of the IntervalTree.
@@ -26,7 +29,7 @@ public class IntervalTreap {
     }
 
     int getSize() {
-        return 0;
+        return size;
     }
 
     /**
@@ -48,6 +51,7 @@ public class IntervalTreap {
         // if the tree is null
         if(root == null){
             root = z;
+            size++;
             return;
         }
 
@@ -71,7 +75,7 @@ public class IntervalTreap {
         } else {
             prev.setRight(z);
         }
-
+        size++;
         System.out.println("Successeful insertion");
         // Performs rotations to satisfy the constraint v.priority > v.parent.priority
     }

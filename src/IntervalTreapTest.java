@@ -32,11 +32,28 @@ class IntervalTreapTest {
 
     @Test
     void getRoot() {
+        IntervalTreap treap = new IntervalTreap();
+        assertNull(treap.getRoot());
 
+        Interval root = new Interval(0, 3);
+        Node n = new Node(root);
+        IntervalTreap treap1 = new IntervalTreap();
+        treap1.intervalInsert(n);
+        assertEquals(n, treap1.getRoot());
     }
 
     @Test
     void getSize() {
+        IntervalTreap treap = new IntervalTreap();
+        Node n1 = new Node(new Interval(0,1));
+        treap.intervalInsert(n1);
+        assertEquals(1, treap.getSize());
+        Node n2 = new Node(new Interval(1,5));
+        treap.intervalInsert(n2);
+        assertEquals(2, treap.getSize());
+        Node n3 = new Node(new Interval(5, 7));
+        treap.intervalInsert(n3);
+        assertEquals(3, treap.getSize());
     }
 
     @Test
