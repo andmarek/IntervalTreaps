@@ -13,8 +13,8 @@ public class Interval {
      * @param high
      */
     public Interval(int low, int high){
-        low = this.low;
-        high = this.high;
+        this.low = low;
+        this.high = high;
     }
 
     /**
@@ -22,14 +22,14 @@ public class Interval {
      * @return the upper endpoint of the interval.
      */
     int getLow() {
-        return low;
+        return this.low;
     }
 
     /**
      * sets the low interval of the node
      * @param low
      */
-    void setLow( int low ){ low = this.low; }
+    void setLow( int low ){ this.low = low; }
 
     /**
      * @return the lower endpoint of the interval.
@@ -42,5 +42,5 @@ public class Interval {
      * sets the max interval of the node
      * @param high
      */
-    void setHigh(int high){ high = this.high; }
+    void setHigh(int high){ this.high = high; }
 }
