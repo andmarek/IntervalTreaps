@@ -1,15 +1,22 @@
 import java.util.Random;
 
-public class IntervalTreap<T extends Comparable<? super T>> {
+public class IntervalTreap {
     private Node root;
 
     /**
      *  Default constructor.
      */
     public IntervalTreap() {
-        root = null;
+        this.root = null;
     }
 
+    /**
+     * Non-default constructor, let's you create one with a root.
+     * @param root
+     */
+    public IntervalTreap(Node root) {
+        this.root = root;
+    }
     /**
      * Getter method to return the root of the IntervalTree.
      * @return reference to the root node.
@@ -38,30 +45,29 @@ public class IntervalTreap<T extends Comparable<? super T>> {
         Random rand = new Random();
         z.setPriority(rand.nextInt());
 
-        // If there isn't a root, then our node is the root
-        if (this.root == null) z = this.root;
-
         // Goes down the tree from the root following z.key
         Node cur = this.root;
+        Node prev = null;
 
         while (cur != null) {
+            prev = cur;
             if (z.getKey() < cur.getKey()) {
                cur = cur.getLeft();
-            }
-            if (z.getKey() > cur.getKey()) {
+            } else {
                 cur = cur.getRight();
             }
         }
 
-        // Inserts as a child of existing node
-        if (cur.getParent() != null) {
-            z.setParent(cur.getParent());
+        if (prev == null) {
+            prev = z;
+        } else if (z.getKey() < prev.getKey()) {
+            prev.setLeft(z);
+        } else {
+            prev.setRight(z);
         }
 
-        z = cur;
-
+        System.out.println("Successeful insertion");
         // Performs rotations to satisfy the constraint v.priority > v.parent.priority
-        //
     }
 
     /**
@@ -78,5 +84,19 @@ public class IntervalTreap<T extends Comparable<? super T>> {
      */
     public Node intervalSearch(Interval i) {
         return null;
+    }
+
+    /**
+     * Prints the keys of an in-order traversal of the tree.
+     * @param n
+     */
+    public void printInOrder(Node n) {
+        System.out.println("Print in order");
+        if (n == null)  {
+            return;
+        }
+        printInOrder(n.getLeft());
+        System.out.printf("%s", n.getKey());
+        printInOrder(n.getRight());
     }
 }
