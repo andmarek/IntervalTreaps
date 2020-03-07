@@ -100,7 +100,15 @@ public class IntervalTreap {
      * @return
      */
     public Node intervalSearch(Interval i) {
-        return null;
+        Node x = this.root;
+        while (x != null && !(i.doesOverlap(x.getInterv())))  {
+            if (x.getLeft() != null && x.getLeft().getKey() >= i.getLow()) {
+                x.setLeft(x.getLeft());
+            } else {
+                x.setRight(x.getRight());
+            }
+        }
+        return x;
     }
 
     /**

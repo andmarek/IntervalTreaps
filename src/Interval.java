@@ -43,4 +43,14 @@ public class Interval {
      * @param high
      */
     void setHigh(int high){ this.high = high; }
+
+    boolean doesOverlap(Interval i) {
+        if (this.high < i.low)  {
+            return false;
+        } else if (i.high < this.low) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
