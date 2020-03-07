@@ -44,7 +44,8 @@ public class IntervalTreap {
      * Adds element x, whose 'interv' field references an interval to the database
      */
     public void intervalInsert(Node z) {
-        // Assigns random priority
+
+        // Assigns random priority to the new node.
         Random rand = new Random();
         z.setPriority(rand.nextInt());
 
@@ -76,6 +77,12 @@ public class IntervalTreap {
             prev.setRight(z);
         }
         size++;
+
+        // If the inserted node's priority < its parent's priority, we rotate.
+        if (z.getPriority() < z.getParent().getPriority()) {
+            System.out.println("Rotating");
+        }
+
         System.out.println("Successeful insertion");
         // Performs rotations to satisfy the constraint v.priority > v.parent.priority
     }
@@ -109,4 +116,29 @@ public class IntervalTreap {
         System.out.printf("%s", n.getKey());
         printInOrder(n.getRight());
     }
+
+    /* From wikipedia pseudo code
+    * https://en.wikipedia.org/wiki/Tree_rotation
+    */
+    public void rotateRight(Node u) {
+        Node q = u.getRight();
+        u.setRight(q.getLeft());
+        q.getLeft().setParent(u);
+        q.setLeft(u);
+        u.setParent(q);
+    }
+    /* From wikipedia pseudo code
+    * https://en.wikipedia.org/wiki/Tree_rotation
+    */
+    public void rotateLeft(Node u) {
+        Node q = u.getRight();
+        u.setRight(q.getLeft());
+        q.getLeft().setParent(u);
+        q.setLeft(u);
+        u.setParent(q);
+
+    }
+
+
+
 }
