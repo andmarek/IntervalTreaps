@@ -24,7 +24,7 @@ public class Node {
         priority = 0;
     }
 
-    public int getKey() {
+    public int getiMax() {
         return iMax;
     }
 
