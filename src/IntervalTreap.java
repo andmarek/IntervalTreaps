@@ -62,7 +62,7 @@ public class IntervalTreap {
 
         while (cur != null) {
             prev = cur;
-            if (z.getKey() < cur.getKey()) {
+            if (z.getiMax() < cur.getiMax()) {
                cur = cur.getLeft();
             } else {
                 cur = cur.getRight();
@@ -71,7 +71,7 @@ public class IntervalTreap {
 
         if (prev == null) {
             prev = z;
-        } else if (z.getKey() < prev.getKey()) {
+        } else if (z.getiMax() < prev.getiMax()) {
             prev.setLeft(z);
         } else {
             prev.setRight(z);
@@ -102,7 +102,7 @@ public class IntervalTreap {
     public Node intervalSearch(Interval i) {
         Node x = this.root;
         while (x != null && !(i.doesOverlap(x.getInterv())))  {
-            if (x.getLeft() != null && x.getLeft().getKey() >= i.getLow()) {
+            if (x.getLeft() != null && x.getLeft().getiMax() >= i.getLow()) {
                 x.setLeft(x.getLeft());
             } else {
                 x.setRight(x.getRight());
@@ -121,7 +121,7 @@ public class IntervalTreap {
             return;
         }
         printInOrder(n.getLeft());
-        System.out.printf("%s", n.getKey());
+        System.out.printf("%s", n.getiMax());
         printInOrder(n.getRight());
     }
 
