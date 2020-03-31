@@ -1,5 +1,5 @@
 # Overview
-- Basically we are making a database that stores things like a Treap but we keep track of interval.  
+- Basically we are making a database that stores things like a Treap but we keep track of interval.
 - Closed interval = ordered pair [a, b] s.t. a <= b
     - [a, b] is the set of real numbers between a and b (inclusively)
 - Interval database = Set of elements where each element x has an interval
@@ -19,4 +19,11 @@
   - overlap
   - one is to the left of the other (i.high < x.low)
   - one is to the right of the other (x.high < i.low)
+
+#insert
+BST based on interval low,
+   for each node that we go through, change the imax if the imax of the insrted node
+       is greater than the current node
+    rotate based on priority
+
 
