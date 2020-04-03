@@ -5,7 +5,7 @@ public class IntervalTreap {
     private int size;
 
     /**
-     *  Default constructor.
+     * Default constructor.
      */
     public IntervalTreap() {
         this.root = null;
@@ -14,14 +14,17 @@ public class IntervalTreap {
 
     /**
      * Non-default constructor, let's you create one with a root.
+     *
      * @param root
      */
     public IntervalTreap(Node root) {
         this.root = root;
         size = 1;
     }
+
     /**
      * Getter method to return the root of the IntervalTree.
+     *
      * @return reference to the root node.
      */
     Node getRoot() {
@@ -33,7 +36,8 @@ public class IntervalTreap {
     }
 
     /**
-     *  Getter method to retrieve the height of the IntervalTree.
+     * Getter method to retrieve the height of the IntervalTree.
+     *
      * @return an integer representing the height of the tree
      */
     int getHeight() {
@@ -50,7 +54,7 @@ public class IntervalTreap {
         z.setPriority(rand.nextInt());
 
         // if the tree is null
-        if(root == null){
+        if (root == null) {
             root = z;
             size++;
             return;
@@ -62,28 +66,46 @@ public class IntervalTreap {
 
         while (cur != null) {
             prev = cur;
-            if (z.getiMax() < cur.getiMax()) {
-               cur = cur.getLeft();
+            if (z.getInterv().getLow() < cur.getInterv().getLow()) {
+                // updates the parents iMax
+                if (z.getiMax() > cur.getiMax()) {
+                    cur.setIMax(z.getiMax());
+                }
+                cur = cur.getLeft();
             } else {
+                // updates the parents iMax
+                if (z.getiMax() > cur.getiMax()) {
+                    cur.setIMax(z.getiMax());
+                }
                 cur = cur.getRight();
             }
         }
 
+        // places the node in the treap
         if (prev == null) {
             prev = z;
-        } else if (z.getiMax() < prev.getiMax()) {
+        } else if (z.getInterv().getLow() < prev.getInterv().getLow()) {
             prev.setLeft(z);
+            z.setParent(prev);
         } else {
             prev.setRight(z);
+            z.setParent(z);
         }
         size++;
 
-        // If the inserted node's priority < its parent's priority, we rotate.
-        if (z.getPriority() < z.getParent().getPriority()) {
-            System.out.println("Rotating");
+        while (z.getPriority() < z.getParent().getPriority()) {
+            if (z.getParent().getLeft() == z) {
+                rotateRight(z);
+                //Node r = z.getRight();
+                //r.setIMax(Math.max(Math.max(r.getiMax(), r.getLeft().getiMax()), r.getRight().getiMax()));
+            } else if (z.getParent().getRight() == z){
+                rotateLeft(z);
+                //z.getLeft().setIMax(Math.max(Math.max(z.getiMax(), z.getLeft().getiMax()), z.getRight().getiMax()));
+            }
         }
 
-        System.out.println("Successeful insertion");
+
+        System.out.println("Successful insertion");
         // Performs rotations to satisfy the constraint v.priority > v.parent.priority
     }
 
@@ -97,11 +119,12 @@ public class IntervalTreap {
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
      * interval i
+     *
      * @return
      */
     public Node intervalSearch(Interval i) {
         Node x = this.root;
-        while (x != null && !(i.doesOverlap(x.getInterv())))  {
+        while (x != null && !(i.doesOverlap(x.getInterv()))) {
             if (x.getLeft() != null && x.getLeft().getiMax() >= i.getLow()) {
                 x.setLeft(x.getLeft());
             } else {
@@ -113,11 +136,12 @@ public class IntervalTreap {
 
     /**
      * Prints the keys of an in-order traversal of the tree.
+     *
      * @param n
      */
     public void printInOrder(Node n) {
         System.out.println("Print in order");
-        if (n == null)  {
+        if (n == null) {
             return;
         }
         printInOrder(n.getLeft());
@@ -126,8 +150,8 @@ public class IntervalTreap {
     }
 
     /* From wikipedia pseudo code
-    * https://en.wikipedia.org/wiki/Tree_rotation
-    */
+     * https://en.wikipedia.org/wiki/Tree_rotation
+     */
     public void rotateRight(Node u) {
         Node q = u.getRight();
         u.setRight(q.getLeft());
@@ -135,9 +159,10 @@ public class IntervalTreap {
         q.setLeft(u);
         u.setParent(q);
     }
+
     /* From wikipedia pseudo code
-    * https://en.wikipedia.org/wiki/Tree_rotation
-    */
+     * https://en.wikipedia.org/wiki/Tree_rotation
+     */
     public void rotateLeft(Node u) {
         Node q = u.getRight();
         u.setRight(q.getLeft());
@@ -146,7 +171,4 @@ public class IntervalTreap {
         u.setParent(q);
 
     }
-
-
-
 }
