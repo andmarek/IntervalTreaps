@@ -93,18 +93,31 @@ public class IntervalTreap {
             z.setParent(prev);
         } else {
             prev.setRight(z);
-            z.setParent(z);
+            z.setParent(prev);
         }
         size++;
 
         while (z.getPriority() < z.getParent().getPriority()) {
             if (z.getParent().getLeft() == z) {
                 rotateRight(z);
-                //Node r = z.getRight();
-                //r.setIMax(Math.max(Math.max(r.getiMax(), r.getLeft().getiMax()), r.getRight().getiMax()));
+                Node r = z.getRight();
+                r.setIMax(r.getInterv().getHigh());
+                if (r.getRight() != null && r.getRight().getiMax() > r.getiMax()) {
+                    r.setIMax(r.getRight().getiMax());
+                }
+                if (r.getLeft() != null && r.getLeft().getiMax() > r.getiMax()) {
+                    r.setIMax(r.getLeft().getiMax());
+                }
             } else if (z.getParent().getRight() == z) {
                 rotateLeft(z);
-                //z.getLeft().setIMax(Math.max(Math.max(z.getiMax(), z.getLeft().getiMax()), z.getRight().getiMax()));
+                Node l = z.getLeft();
+                l.setIMax(l.getInterv().getHigh());
+                if (l.getRight() != null && l.getRight().getiMax() > l.getiMax()) {
+                    l.setIMax(l.getRight().getiMax());
+                }
+                if (l.getLeft() != null && l.getLeft().getiMax() > l.getiMax()) {
+                    l.setIMax(l.getLeft().getiMax());
+                }
             }
 
         }
@@ -212,15 +225,12 @@ public class IntervalTreap {
      * @param n
      */
     public String printInOrder(Node n, String inorder) {
-        System.out.println("Print in order");
         if (n == null) {
             return inorder;
         }
-
         printInOrder(n.getLeft(), inorder);
         inorder += "[" + n.getInterv().getLow() + "],";
-        printInOrder(n.getRight(), inorder);
-        return inorder;
+        return printInOrder(n.getRight(), inorder);
     }
 
     /* From wikipedia pseudo code
@@ -243,6 +253,7 @@ public class IntervalTreap {
         u.setParent(w);
         w.setLeft(u);
         if (u == this.root) {this.root = w; root.setParent(null); }
+
 
     }
 
