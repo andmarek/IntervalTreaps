@@ -72,6 +72,10 @@ class IntervalTreapTest {
 
     @Test
     void intervalInsertTest() {
+        Node root = new Node(new Interval(0, 12));
+        IntervalTreap treap = new IntervalTreap();
+        treap.intervalInsert(root);
+
 
     }
 
@@ -84,7 +88,19 @@ class IntervalTreapTest {
     }
 
     @Test
-    void printInOrder() {
+    void printRoot(){
+        Node root = new Node(new Interval(0, 12));
+        IntervalTreap treap = new IntervalTreap();
+        treap.intervalInsert(root);
+        String actual = treap.printInOrder(root, "");
+        assertEquals("0", actual);
+
+    }
+
+    @Test
+    void printInOrderTest() {
+
+
     }
 
 

@@ -37,6 +37,7 @@ public class IntervalTreap {
 
     /**
      * Getter method to retrieve the height of the IntervalTree
+     *
      * @return an integer representing the height of the tree
      */
     int getHeight() {
@@ -97,11 +98,12 @@ public class IntervalTreap {
                 rotateRight(z);
                 //Node r = z.getRight();
                 //r.setIMax(Math.max(Math.max(r.getiMax(), r.getLeft().getiMax()), r.getRight().getiMax()));
-            } else if (z.getParent().getRight() == z){
+            } else if (z.getParent().getRight() == z) {
                 rotateLeft(z);
                 //z.getLeft().setIMax(Math.max(Math.max(z.getiMax(), z.getLeft().getiMax()), z.getRight().getiMax()));
             }
 
+        }
         System.out.println("Successful insertion");
         // Performs rotations to satisfy the constraint v.priority > v.parent.priority
     }
@@ -121,7 +123,7 @@ public class IntervalTreap {
         while (true) {
             if (val > cur.getInterv().getLow()) {
                 /* val is greater, and the right child isn't null, then
-                * we move down the tree */
+                 * we move down the tree */
                 if (cur.getRight() != null) {
                     p = cur;
                     cur = cur.getRight();
@@ -146,7 +148,7 @@ public class IntervalTreap {
                         p.setRight(null);
                     }
                 } else if (cur.getLeft() == null) {
-                    if (p == null)  {
+                    if (p == null) {
                         this.root = cur.getRight();
                     } else if (p.getLeft().getInterv().getLow() == cur.getInterv().getLow()) {
                         p.setLeft(cur.getRight());
@@ -161,7 +163,7 @@ public class IntervalTreap {
                     } else {
                         p.setRight(cur.getRight());
                     }
-                } else  {
+                } else {
                     int successorNodeKey = getSuccessorNodeKey(z);
                     //intervalDelete();
                     cur.getInterv().setLow(successorNodeKey);
@@ -169,6 +171,7 @@ public class IntervalTreap {
             }
         }
     }
+
     public int getSuccessorNodeKey(Node n) {
         while (true) {
             if (n.getLeft() != null) {
@@ -179,6 +182,7 @@ public class IntervalTreap {
         }
         return n.getInterv().getLow();
     }
+
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
      * interval i
@@ -202,14 +206,16 @@ public class IntervalTreap {
      *
      * @param n
      */
-    public void printInOrder(Node n) {
+    public String printInOrder(Node n, String inorder) {
         System.out.println("Print in order");
         if (n == null) {
-            return;
+            return inorder;
         }
-        printInOrder(n.getLeft());
-        System.out.printf("%s", n.getiMax());
-        printInOrder(n.getRight());
+
+        printInOrder(n.getLeft(), inorder);
+        inorder += "[" + n.getInterv().getLow() + "],";
+        printInOrder(n.getRight(), inorder);
+        return inorder;
     }
 
     /* From wikipedia pseudo code
