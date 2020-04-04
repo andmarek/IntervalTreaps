@@ -200,24 +200,7 @@ public class IntervalTreap {
         z.setRight(null);
         return z;
     }
-
-    public Node getSuccessor(Node n) {
-        if (n == null) {
-            return null;
-        }
-
-        Node cur = n;
-
-        if (n.) {
-
-        }
-
-        while (cur != null) {
-
-        }
-
-    }
-
+    
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
      * interval i
