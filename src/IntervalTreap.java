@@ -188,23 +188,6 @@ public class IntervalTreap {
         return z;
     }
 
-    public Node getSuccessor(Node n) {
-        if (n == null) {
-            return null;
-        }
-
-        Node cur = n;
-
-        if (n.) {
-
-        }
-
-        while (cur != null) {
-
-        }
-
-    }
-
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
      * interval i
@@ -243,23 +226,48 @@ public class IntervalTreap {
     /* From wikipedia pseudo code
      * https://en.wikipedia.org/wiki/Tree_rotation
      */
-    public void rotateRight(Node u) {
-        Node q = u.getRight();
-        u.setRight(q.getLeft());
-        q.getLeft().setParent(u);
-        q.setLeft(u);
-        u.setParent(q);
+    public void rotateLeft(Node u) {
+        Node w = u.getRight();
+        w.setParent(u.getParent());
+        if (w.getParent() != null) {
+            if (w.getParent().getLeft() == u) {
+                w.getParent().setLeft(w);
+            } else {
+                w.getParent().setRight(w);
+            }
+        }
+        u.setRight(w.getLeft());
+        if (u.getRight() != null) {
+            u.getRight().setParent(u);
+        }
+        u.setParent(w);
+        w.setLeft(u);
+        if (u == this.root) {this.root = w; root.setParent(null); }
+
     }
 
     /* From wikipedia pseudo code
      * https://en.wikipedia.org/wiki/Tree_rotation
      */
-    public void rotateLeft(Node u) {
-        Node q = u.getRight();
-        u.setRight(q.getLeft());
-        q.getLeft().setParent(u);
-        q.setLeft(u);
-        u.setParent(q);
-
+    public void rotateRight(Node u) {
+        Node w = u.getLeft();
+        w.setParent(u.getParent());
+        if (w.getParent() != null) {
+            if (w.getParent().getLeft() == u) {
+                w.getParent().setLeft(w);
+            } else {
+                w.getParent().setRight(w);
+            }
+        }
+        u.setLeft(w.getRight());
+        if (u.getLeft() != null) {
+            u.getLeft().setParent(u);
+        }
+        u.setParent(w);
+        w.setRight(u);
+        if (u == this.root) {
+            this.root = w;
+            this.root.setParent(null);
+        }
     }
 }
