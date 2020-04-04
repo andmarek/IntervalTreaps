@@ -1,3 +1,7 @@
+/**
+ * @
+ */
+
 import java.util.Random;
 
 public class IntervalTreap {
@@ -125,75 +129,93 @@ public class IntervalTreap {
      * Removes some element x from the database
      */
     public void intervalDelete(Node z) {
-        // Find the node
-        if (this.root == null)
-            return;
-
         Node cur = this.root;
-        Node p = null;
+        Node parent = null;
+
+        if (z == null) return;
+        if (this.root == null) return;
+
         int val = z.getInterv().getLow();
 
-        while (true) {
-            if (val > cur.getInterv().getLow()) {
-                /* val is greater, and the right child isn't null, then
-                 * we move down the tree */
-                if (cur.getRight() != null) {
-                    p = cur;
-                    cur = cur.getRight();
-                } else {
-                    System.out.println("Hey we good bro, we ain't got nothing man.");
-                    break;
-                }
-            } else if (val < cur.getInterv().getLow()) {
-                /* val is greater, and the right child isn't null, then
-                we move down the tree */
-                if (cur.getLeft() != null) {
-                    p = cur;
-                    cur = cur.getLeft();
-                }
-            } else {
-                if (cur.getLeft() == null && cur.getRight() == null) {
-                    if (p == null) {
-                        this.root = null;
-                    } else if (p.getLeft().getInterv().getLow() == cur.getInterv().getLow()) {
-                        p.setLeft(null);
-                    } else {
-                        p.setRight(null);
-                    }
-                } else if (cur.getLeft() == null) {
-                    if (p == null) {
-                        this.root = cur.getRight();
-                    } else if (p.getLeft().getInterv().getLow() == cur.getInterv().getLow()) {
-                        p.setLeft(cur.getRight());
-                    } else {
-                        p.setRight(cur.getRight());
-                    }
-                } else if (cur.getRight() == null) {
-                    if (p == null) {
-                        this.root = cur.getLeft();
-                    } else if (p.getLeft().getInterv().getLow() == cur.getInterv().getLow()) {
-                        p.setLeft(cur.getRight());
-                    } else {
-                        p.setRight(cur.getRight());
-                    }
-                } else {
-                    int successorNodeKey = getSuccessorNodeKey(z);
-                    //intervalDelete();
-                    cur.getInterv().setLow(successorNodeKey);
-                }
-            }
-        }
-    }
-
-    public int getSuccessorNodeKey(Node n) {
-        while (true) {
-            if (n.getLeft() != null) {
-                n = n.getLeft();
-            } else {
+        // We iterate until we find the node
+        while (cur != null) {
+            if (z == cur) {
+                System.out.println("Found dat sheee");
                 break;
             }
+
+            parent = cur;
+            if (cur.getInterv().getLow() > val) {
+                cur = cur.getLeft();
+            } else if (cur.getInterv().getLow() < val) {
+                cur = cur.getRight();
+            }
         }
-        return n.getInterv().getLow();
+        if (parent == null) {
+            deleteHelper(cur);
+        }
+
+        // whatever cur is should be the node we need to delete
+        if (cur.getLeft() == null && cur.getRight() != null)  {
+            cur = cur.getRight();
+        } else if (cur.getLeft() != null && cur.getRight() == null) {
+            cur = cur.getLeft();
+        } else {
+
+        }
+
+        // perform rotations then
+    }
+
+    public Node deleteHelper(Node z) {
+        if (z != null) {
+            if (z.getLeft() == null && z.getRight() == null) {
+                return null;
+            }
+            if (z.getLeft() != null && z.getRight() != null) {
+                Node inOrderSuccessor = deleteInOrderSuccessorDup(z);
+            } else if (z.getLeft() != null) {
+                // case one
+                z = z.getLeft();
+            } else {
+                // case two
+                z = z.getRight();
+            }
+        }
+        return z;
+    }
+
+    public Node deleteInOrderSuccessorDup(Node z) {
+        Node parent = z;
+        z = z.getRight();
+        while (z.getLeft() != null) {
+            parent = z;
+            z = z.getLeft();
+        }
+        if (z.getLeft() == null) {
+            parent.setRight(z.getRight());
+        } else {
+            parent.setLeft(z.getRight());
+        }
+        z.setRight(null);
+        return z;
+    }
+
+    public Node getSuccessor(Node n) {
+        if (n == null) {
+            return null;
+        }
+
+        Node cur = n;
+
+        if (n.) {
+
+        }
+
+        while (cur != null) {
+
+        }
+
     }
 
     /**
