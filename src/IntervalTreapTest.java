@@ -4,30 +4,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class IntervalTreapTest {
-    Interval val1;
-    Interval val2;
-    Interval val3;
-    Interval val4;
-    Interval val5;
-    Interval val6;
-    Interval val7;
-    Interval val8;
-    Interval val9;
-    Interval val10;
+    Node n1;
+    Node n2;
+    Node n3;
+    Node n4;
+    Node n5;
+    Node n6;
+    Node n7;
+    Node n8;
+    Node n9;
+    Node n10;
+
+
 
 
     @BeforeEach
     void setup(){
-        val1 = new Interval(0, 3);
-        val2 = new Interval(5, 8);
-        val3 = new Interval(6, 10);
-        val4 = new Interval(8, 9);
-        val5 = new Interval(15, 23);
-        val6 = new Interval(16, 21);
-        val7 = new Interval(17, 19);
-        val8 = new Interval(19, 20);
-        val9 = new Interval(25, 30);
-        val10 = new Interval(26, 26);
+        n1 = new Node(new Interval(0, 3));
+        n2 = new Node(new Interval(5, 8));
+        n3 = new Node(new Interval(6, 10));
+        n4 = new Node(new Interval(8, 9));
+        n5 = new Node(new Interval(15, 23));
+        n6 = new Node(new Interval(16, 21));
+        n7 = new Node(new Interval(17, 19));
+        n8 = new Node(new Interval(19, 20));
+        n9 = new Node(new Interval(25, 30));
+        n10 = new Node(new Interval(26, 26));
     }
 
     @Test
@@ -45,13 +47,10 @@ class IntervalTreapTest {
     @Test
     void getSize() {
         IntervalTreap treap = new IntervalTreap();
-        Node n1 = new Node(new Interval(0,1));
         treap.intervalInsert(n1);
         assertEquals(1, treap.getSize());
-        Node n2 = new Node(new Interval(1,5));
         treap.intervalInsert(n2);
         assertEquals(2, treap.getSize());
-        Node n3 = new Node(new Interval(5, 7));
         treap.intervalInsert(n3);
         assertEquals(3, treap.getSize());
     }
@@ -62,20 +61,41 @@ class IntervalTreapTest {
 
     @Test
     void intervalInsertRoot(){
-        Node root = new Node(new Interval(0, 12));
         IntervalTreap treap = new IntervalTreap();
-        treap.intervalInsert(root);
+        treap.intervalInsert(n1);
 
         // testing if it insert node to root
-        assertEquals(root, treap.getRoot());
+        assertEquals(n1, treap.getRoot());
     }
 
     @Test
     void intervalInsertTest() {
-        Node root = new Node(new Interval(0, 12));
         IntervalTreap treap = new IntervalTreap();
-        treap.intervalInsert(root);
+        IntervalTreap treap2 = new IntervalTreap();
+        treap.intervalInsert(n1);
+        treap.intervalInsert(n2);
+        treap.intervalInsert(n3);
+        treap.intervalInsert(n4);
+        treap.intervalInsert(n5);
+        treap.intervalInsert(n6);
+        treap.intervalInsert(n7);
+        treap.intervalInsert(n8);
+        treap.intervalInsert(n9);
+        treap.intervalInsert(n10);
 
+        assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap.printInOrder(treap.getRoot(), ""));
+
+        treap2.intervalInsert(n5);
+        treap2.intervalInsert(n6);
+        treap2.intervalInsert(n7);
+        treap2.intervalInsert(n8);
+        treap2.intervalInsert(n9);
+        treap2.intervalInsert(n10);
+        treap2.intervalInsert(n1);
+        treap2.intervalInsert(n2);
+        treap2.intervalInsert(n3);
+        treap2.intervalInsert(n4);
+        assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap2.printInOrder(treap2.getRoot(), ""));
 
     }
 
@@ -93,13 +113,25 @@ class IntervalTreapTest {
         IntervalTreap treap = new IntervalTreap();
         treap.intervalInsert(root);
         String actual = treap.printInOrder(root, "");
-        assertEquals("0", actual);
+        assertEquals("[0],", actual);
 
     }
 
     @Test
     void printInOrderTest() {
-
+        IntervalTreap treap = new IntervalTreap();
+        treap.intervalInsert(n1);
+        String actual = treap.printInOrder(treap.getRoot(), "");
+        assertEquals("[0],", actual);
+        treap.intervalInsert(n2);
+        String actual2 = treap.printInOrder(treap.getRoot(), "");
+        assertEquals("[0],[5],", actual2);
+        treap.intervalInsert(n3);
+        String actual3 = treap.printInOrder(treap.getRoot(), "");
+        assertEquals("[0],[5],[6],", actual3);
+        treap.intervalInsert(n4);
+        String actual4 = treap.printInOrder(treap.getRoot(), "");
+        assertEquals("[0],[5],[6],[8],", actual4);
 
     }
 
