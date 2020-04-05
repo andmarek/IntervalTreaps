@@ -70,6 +70,7 @@ public class IntervalTreap {
                 if (z.getiMax() > cur.getiMax()) {
                     cur.setIMax(z.getiMax());
                 }
+
                 cur = cur.getLeft();
             } else {
                 // updates the parents iMax
@@ -90,9 +91,10 @@ public class IntervalTreap {
             prev.setRight(z);
             z.setParent(prev);
         }
+
         size++;
 
-        while (z.getParent()!= null && z.getPriority() < z.getParent().getPriority()) {
+        while (z != this.root && z.getPriority() < z.getParent().getPriority()) {
             if (z.getParent().getLeft() == z) {
                 rotateRight(z.getParent());
                 Node r = z.getRight();
@@ -127,10 +129,15 @@ public class IntervalTreap {
         Node cur = this.root;
         Node parent = null;
 
-        if (z == null) return;
-        if (this.root == null) return;
+        if (z == null) {
+            return;
+        }
 
-        int val = z.getInterv().getLow();
+        if (this.root == null) {
+            return;
+        }
+
+        int val = z.getKey();
 
         // We iterate until we find the node
         while (cur != null) {
@@ -140,62 +147,87 @@ public class IntervalTreap {
             }
 
             parent = cur;
-            if (cur.getInterv().getLow() > val) {
+            if (cur.getKey() > val) {
                 cur = cur.getLeft();
-            } else if (cur.getInterv().getLow() < val) {
+            } else {
                 cur = cur.getRight();
             }
         }
 
-        if (parent == null) {
-            deleteHelper(cur);
-        }
-
-        // whatever cur is should be the node we need to delete
-        if (cur.getLeft() == null && cur.getRight() != null)  {
-            cur = cur.getRight();
-        } else if (cur.getLeft() != null && cur.getRight() == null) {
-            cur = cur.getLeft();
-        } else {
-
-        }
-
-        // perform rotations then
-    }
-
-    public Node deleteHelper(Node z) {
-        if (z != null) {
-            if (z.getLeft() == null && z.getRight() == null) {
-                return null;
+        // Case 1: it's a fucking LEAF.
+        if (cur.getRight() == null && cur.getLeft() == null) {
+            if (parent.getLeft() == cur) {
+               parent.setLeft(null);
+            } else if (parent.getRight() == cur) {
+               parent.setRight(null);
             }
-            if (z.getLeft() != null && z.getRight() != null) {
-                Node inOrderSuccessor = deleteInOrderSuccessorDup(z);
-            } else if (z.getLeft() != null) {
-                // case one
-                z = z.getLeft();
+        // Case 2: The node to be deleted has one child
+        } else if (cur.getRight() != null ^ cur.getLeft() != null) {
+            if (cur.getRight() != null) {
+                parent.setRight(cur.getRight());
             } else {
-                // case two
-                z = z.getRight();
+                parent.setLeft(cur.getLeft());
+            }
+            cur = null;
+        // Case 3: 2 children
+        } else {
+           // replace by successor
+            // kind sketchy imo
+            if (parent.getLeft() == cur) {
+                parent.setLeft(getInOrderSuccessor(cur));
+            } else {
+                parent.setRight(getInOrderSuccessor(cur));
             }
         }
-        return z;
+
+        // Rotations -- Duplicated code but whatever
+        while (z != this.root && z.getPriority() < z.getParent().getPriority()) {
+            if (z.getParent().getLeft() == z) {
+                rotateRight(z.getParent());
+                Node r = z.getRight();
+                r.setIMax(r.getInterv().getHigh());
+                if (r.getRight() != null && r.getRight().getiMax() > r.getiMax()) {
+                    r.setIMax(r.getRight().getiMax());
+                }
+                if (r.getLeft() != null && r.getLeft().getiMax() > r.getiMax()) {
+                    r.setIMax(r.getLeft().getiMax());
+                }
+            } else if (z.getParent().getRight() == z) {
+                rotateLeft(z.getParent());
+                Node l = z.getLeft();
+                l.setIMax(l.getInterv().getHigh());
+                if (l.getRight() != null && l.getRight().getiMax() > l.getiMax()) {
+                    l.setIMax(l.getRight().getiMax());
+                }
+                if (l.getLeft() != null && l.getLeft().getiMax() > l.getiMax()) {
+                    l.setIMax(l.getLeft().getiMax());
+                }
+            }
+        }
+        this.size--;
     }
 
-    public Node deleteInOrderSuccessorDup(Node z) {
-        Node parent = z;
-        z = z.getRight();
-        while (z.getLeft() != null) {
-            parent = z;
-            z = z.getLeft();
+    public Node getInOrderSuccessor(Node x) {
+        if (x.getRight() != null) {
+            return getMin(x.getRight());
         }
-        if (z.getLeft() == null) {
-            parent.setRight(z.getRight());
-        } else {
-            parent.setLeft(z.getRight());
+        Node parent = x.getParent();
+        while (parent != null && x == parent.getRight()) {
+            x = parent;
+            parent = parent.getParent();
         }
-        z.setRight(null);
-        return z;
+
+        return parent;
     }
+
+    public Node getMin(Node x) {
+        Node cur = x;
+        while (cur.getLeft() != null) {
+            cur = cur.getLeft();
+        }
+         return cur;
+    }
+
 
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
@@ -253,9 +285,8 @@ public class IntervalTreap {
         }
         u.setParent(w);
         w.setLeft(u);
-        if (u == this.root) {this.root = w; this.root.setParent(null); }
 
-
+        if (u == this.root) {this.root = w; root.setParent(null); }
     }
 
     /* From wikipedia pseudo code

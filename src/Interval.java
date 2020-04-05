@@ -42,10 +42,11 @@ public class Interval {
      * sets the max interval of the node
      * @param high
      */
-    public void setHigh(int high){ this.high = high; }
 
-    public boolean doesOverlap(Interval i) {
-        if (this.high < i.low)  {
+    void setHigh(int high) { this.high = high; }
+
+    boolean doesOverlap(Interval i) {
+        if (i.low < this.high)  {
             return false;
         } else if (i.high < this.low) {
             return false;
