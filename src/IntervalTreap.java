@@ -151,6 +151,7 @@ public class IntervalTreap {
                 cur = cur.getRight();
             }
         }
+
         if (parent == null) {
             deleteHelper(cur);
         }
@@ -226,9 +227,9 @@ public class IntervalTreap {
         Node x = this.root;
         while (x != null && !(i.doesOverlap(x.getInterv()))) {
             if (x.getLeft() != null && x.getLeft().getiMax() >= i.getLow()) {
-                x.setLeft(x.getLeft());
+                x = x.getLeft();
             } else {
-                x.setRight(x.getRight());
+                x = x.getRight();
             }
         }
         return x;
@@ -244,8 +245,13 @@ public class IntervalTreap {
             return inorder;
         }
         printInOrder(n.getLeft(), inorder);
+        printInOrder(n.getRight(), inorder);
+
         inorder += "[" + n.getInterv().getLow() + "],";
-        return printInOrder(n.getRight(), inorder);
+
+        System.out.print(inorder);
+
+        return inorder;
     }
 
     /* From wikipedia pseudo code
