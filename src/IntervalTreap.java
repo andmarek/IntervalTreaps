@@ -139,6 +139,9 @@ public class IntervalTreap {
 
         int val = z.getKey();
 
+        if (cur == this.root) {
+            this.root = null;
+        }
         // We iterate until we find the node
         while (cur != null) {
             if (z == cur) {
@@ -156,7 +159,9 @@ public class IntervalTreap {
 
         // Case 1: it's a fucking LEAF.
         if (cur.getRight() == null && cur.getLeft() == null) {
-            if (parent.getLeft() == cur) {
+            if (cur.getParent() == null)  {
+                cur = null;
+            } else if (parent.getLeft() == cur) {
                parent.setLeft(null);
             } else if (parent.getRight() == cur) {
                parent.setRight(null);
@@ -171,7 +176,7 @@ public class IntervalTreap {
             cur = null;
         // Case 3: 2 children
         } else {
-           // replace by successor
+            // replace by successor
             // kind sketchy imo
             if (parent.getLeft() == cur) {
                 parent.setLeft(getInOrderSuccessor(cur));
@@ -179,6 +184,7 @@ public class IntervalTreap {
                 parent.setRight(getInOrderSuccessor(cur));
             }
         }
+        // Update iMax pls
 
         // Rotations -- Duplicated code but whatever
         while (z != this.root && z.getPriority() < z.getParent().getPriority()) {
