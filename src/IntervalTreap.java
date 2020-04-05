@@ -97,9 +97,9 @@ public class IntervalTreap {
         }
         size++;
 
-        while (z.getPriority() < z.getParent().getPriority()) {
+        while (z.getParent() != null && z.getPriority() < z.getParent().getPriority()) {
             if (z.getParent().getLeft() == z) {
-                rotateRight(z);
+                rotateRight(z.getParent());
                 Node r = z.getRight();
                 r.setIMax(r.getInterv().getHigh());
                 if (r.getRight() != null && r.getRight().getiMax() > r.getiMax()) {
@@ -109,7 +109,7 @@ public class IntervalTreap {
                     r.setIMax(r.getLeft().getiMax());
                 }
             } else if (z.getParent().getRight() == z) {
-                rotateLeft(z);
+                rotateLeft(z.getParent()); //
                 Node l = z.getLeft();
                 l.setIMax(l.getInterv().getHigh());
                 if (l.getRight() != null && l.getRight().getiMax() > l.getiMax()) {
@@ -165,20 +165,36 @@ public class IntervalTreap {
         }
 
         // perform rotations then
+        while (z.getLeft() != null || z.getRight() != null) {
+            if (z.getLeft() == null) {
+                rotateLeft(z);
+            } else if (z.getRight() == null) {
+                rotateRight(z);
+            } else if (z.getLeft().getParent().getKey() < z.getRight().getRight().getKey()) {
+                rotateRight(z);
+            } else {
+                rotateLeft(z);
+            }
+            if (this.root == z) {
+                this.root = z.getParent();
+            }
+        }
     }
 
+    // could be void since we're not actually passing it
     public Node deleteHelper(Node z) {
         if (z != null) {
             if (z.getLeft() == null && z.getRight() == null) {
                 return null;
             }
+            // case of two children
             if (z.getLeft() != null && z.getRight() != null) {
                 Node inOrderSuccessor = deleteInOrderSuccessorDup(z);
             } else if (z.getLeft() != null) {
-                // case one
+                // case one - left child
                 z = z.getLeft();
             } else {
-                // case two
+                // case two - right child
                 z = z.getRight();
             }
         }
@@ -204,7 +220,6 @@ public class IntervalTreap {
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
      * interval i
-     *
      * @return
      */
     public Node intervalSearch(Interval i) {
@@ -238,6 +253,7 @@ public class IntervalTreap {
      */
     public void rotateLeft(Node u) {
         Node w = u.getRight();
+
         w.setParent(u.getParent());
         if (w.getParent() != null) {
             if (w.getParent().getLeft() == u) {
@@ -253,8 +269,6 @@ public class IntervalTreap {
         u.setParent(w);
         w.setLeft(u);
         if (u == this.root) {this.root = w; root.setParent(null); }
-
-
     }
 
     /* From wikipedia pseudo code

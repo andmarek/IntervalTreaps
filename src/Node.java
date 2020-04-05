@@ -48,6 +48,10 @@ public class Node {
         return this.priority;
     }
 
+    public int getKey() {
+       return this.getInterv().getLow();
+    }
+
     public void setIMax(int iMax) {
         this.iMax = iMax;
     }
