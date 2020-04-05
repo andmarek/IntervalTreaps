@@ -16,12 +16,14 @@ public class Node {
 
     //edge case Interval is empty?
     public Node(Interval interval){
+        Random rand = new Random();
         this.interval = interval;
         iMax = interval.getHigh();
         parent = null;
         left = null;
         right = null;
-        priority = 0;
+        priority = rand.nextInt();
+
     }
 
     public int getiMax() {

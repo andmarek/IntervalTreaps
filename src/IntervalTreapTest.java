@@ -72,19 +72,20 @@ class IntervalTreapTest {
     void intervalInsertTest() {
         IntervalTreap treap = new IntervalTreap();
         IntervalTreap treap2 = new IntervalTreap();
-        treap.intervalInsert(n1);
-        treap.intervalInsert(n2);
-        treap.intervalInsert(n3);
-        treap.intervalInsert(n4);
-        treap.intervalInsert(n5);
-        treap.intervalInsert(n6);
-        treap.intervalInsert(n7);
-        treap.intervalInsert(n8);
-        treap.intervalInsert(n9);
-        treap.intervalInsert(n10);
-
-        assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap.printInOrder(treap.getRoot(), ""));
-
+        IntervalTreap treap3 = new IntervalTreap();
+//        treap.intervalInsert(n1);
+//        treap.intervalInsert(n2);
+//        treap.intervalInsert(n3);
+//        treap.intervalInsert(n4);
+//        treap.intervalInsert(n5);
+//        treap.intervalInsert(n6);
+//        treap.intervalInsert(n7);
+//        treap.intervalInsert(n8);
+//        treap.intervalInsert(n9);
+//        treap.intervalInsert(n10);
+//
+//        assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap.printInOrder(treap.getRoot(), ""));
+//
 //        treap2.intervalInsert(n5);
 //        treap2.intervalInsert(n6);
 //        treap2.intervalInsert(n7);
@@ -96,6 +97,19 @@ class IntervalTreapTest {
 //        treap2.intervalInsert(n3);
 //        treap2.intervalInsert(n4);
 //        assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap2.printInOrder(treap2.getRoot(), ""));
+
+        treap3.intervalInsert(n5);
+        treap3.intervalInsert(n1);
+        treap3.intervalInsert(n6);
+        treap3.intervalInsert(n2);
+        treap3.intervalInsert(n7);
+        treap3.intervalInsert(n3);
+        treap3.intervalInsert(n8);
+        treap3.intervalInsert(n4);
+        treap3.intervalInsert(n9);
+        treap3.intervalInsert(n10);
+        assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap3.printInOrder(treap3.getRoot(), ""));
+
 
     }
 
