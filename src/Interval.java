@@ -21,7 +21,7 @@ public class Interval {
      * sets the low interval of the node
      * @return the upper endpoint of the interval.
      */
-    int getLow() {
+    public int getLow() {
         return this.low;
     }
 
@@ -29,12 +29,12 @@ public class Interval {
      * sets the low interval of the node
      * @param low
      */
-    void setLow( int low ){ this.low = low; }
+    public void setLow( int low ){ this.low = low; }
 
     /**
      * @return the lower endpoint of the interval.
      */
-    int getHigh() {
+    public int getHigh() {
         return high;
     }
 
@@ -42,6 +42,7 @@ public class Interval {
      * sets the max interval of the node
      * @param high
      */
+
     void setHigh(int high) { this.high = high; }
 
     boolean doesOverlap(Interval i) {
@@ -52,5 +53,9 @@ public class Interval {
         } else {
             return true;
         }
+    }
+
+    public String toString(){
+        return "[" + this.getLow() +","+getHigh()+"] ";
     }
 }

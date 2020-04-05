@@ -65,7 +65,7 @@ public class IntervalTreap {
 
         while (cur != null) {
             prev = cur;
-            if (z.getKey() <= cur.getKey()) {
+            if (z.getKey() < cur.getKey()) {
                 // updates the parents iMax
                 if (z.getiMax() > cur.getiMax()) {
                     cur.setIMax(z.getiMax());
@@ -98,23 +98,13 @@ public class IntervalTreap {
             if (z.getParent().getLeft() == z) {
                 rotateRight(z.getParent());
                 Node r = z.getRight();
-                r.setIMax(r.getInterv().getHigh());
-                if (r.getRight() != null && r.getRight().getiMax() > r.getiMax()) {
-                    r.setIMax(r.getRight().getiMax());
-                }
-                if (r.getLeft() != null && r.getLeft().getiMax() > r.getiMax()) {
-                    r.setIMax(r.getLeft().getiMax());
-                }
+                updateIMax(r);
+                updateIMax(z);
             } else if (z.getParent().getRight() == z) {
                 rotateLeft(z.getParent());
                 Node l = z.getLeft();
-                l.setIMax(l.getInterv().getHigh());
-                if (l.getRight() != null && l.getRight().getiMax() > l.getiMax()) {
-                    l.setIMax(l.getRight().getiMax());
-                }
-                if (l.getLeft() != null && l.getLeft().getiMax() > l.getiMax()) {
-                    l.setIMax(l.getLeft().getiMax());
-                }
+                updateIMax(l);
+                updateIMax(z);
             }
 
         }
@@ -164,9 +154,9 @@ public class IntervalTreap {
             } else if (parent.getLeft() == cur) {
                parent.setLeft(null);
             } else if (parent.getRight() == cur) {
-               parent.setRight(null);
+                parent.setRight(null);
             }
-        // Case 2: The node to be deleted has one child
+            // Case 2: The node to be deleted has one child
         } else if (cur.getRight() != null ^ cur.getLeft() != null) {
             if (cur.getRight() != null) {
                 parent.setRight(cur.getRight());
@@ -174,7 +164,7 @@ public class IntervalTreap {
                 parent.setLeft(cur.getLeft());
             }
             cur = null;
-        // Case 3: 2 children
+            // Case 3: 2 children
         } else {
             // replace by successor
             // kind sketchy imo
@@ -231,7 +221,7 @@ public class IntervalTreap {
         while (cur.getLeft() != null) {
             cur = cur.getLeft();
         }
-         return cur;
+        return cur;
     }
 
 
@@ -262,11 +252,11 @@ public class IntervalTreap {
         if (n == null) {
             return inorder;
         }
-        if(n.getLeft() != null) {
+        if (n.getLeft() != null) {
             inorder = printInOrder(n.getLeft(), inorder);
         }
         inorder += "[" + n.getKey() + "],";
-        if(n.getRight()!=null){
+        if (n.getRight() != null) {
             inorder = printInOrder(n.getRight(), inorder);
         }
         return inorder;
@@ -292,7 +282,10 @@ public class IntervalTreap {
         u.setParent(w);
         w.setLeft(u);
 
-        if (u == this.root) {this.root = w; root.setParent(null); }
+        if (u == this.root) {
+            this.root = w;
+            root.setParent(null);
+        }
     }
 
     /* From wikipedia pseudo code
@@ -317,6 +310,16 @@ public class IntervalTreap {
         if (u == this.root) {
             this.root = w;
             this.root.setParent(null);
+        }
+    }
+
+    public void updateIMax(Node u){
+        u.setIMax(u.getInterv().getHigh());
+        if (u.getRight() != null && u.getRight().getiMax() > u.getiMax()) {
+            u.setIMax(u.getRight().getiMax());
+        }
+        if (u.getLeft() != null && u.getLeft().getiMax() > u.getiMax()) {
+            u.setIMax(u.getLeft().getiMax());
         }
     }
 }
