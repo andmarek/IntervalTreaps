@@ -149,7 +149,7 @@ public class IntervalTreap {
             parent = cur;
             if (cur.getKey() > val) {
                 cur = cur.getLeft();
-            } else if (cur.getKey() < val) {
+            } else {
                 cur = cur.getRight();
             }
         }
@@ -158,8 +158,8 @@ public class IntervalTreap {
         if (cur.getRight() == null && cur.getLeft() == null) {
             if (parent.getLeft() == cur) {
                parent.setLeft(null);
-            } else if (parent.getRight() == null) {
-               parent.setLeft(null);
+            } else if (parent.getRight() == cur) {
+               parent.setRight(null);
             }
         // Case 2: The node to be deleted has one child
         } else if (cur.getRight() != null ^ cur.getLeft() != null) {
@@ -172,6 +172,7 @@ public class IntervalTreap {
         // Case 3: 2 children
         } else {
            // replace by successor
+            // kind sketchy imo
             if (parent.getLeft() == cur) {
                 parent.setLeft(getInOrderSuccessor(cur));
             } else {
@@ -179,7 +180,7 @@ public class IntervalTreap {
             }
         }
 
-        // Duplicated code but whatever
+        // Rotations -- Duplicated code but whatever
         while (z != this.root && z.getPriority() < z.getParent().getPriority()) {
             if (z.getParent().getLeft() == z) {
                 rotateRight(z.getParent());
@@ -203,13 +204,15 @@ public class IntervalTreap {
                 }
             }
         }
+        this.size--;
     }
+
     public Node getInOrderSuccessor(Node x) {
         if (x.getRight() != null) {
             return getMin(x.getRight());
         }
         Node parent = x.getParent();
-        while (parent != null && x == parent.getParent()) {
+        while (parent != null && x == parent.getRight()) {
             x = parent;
             parent = parent.getParent();
         }
@@ -225,39 +228,6 @@ public class IntervalTreap {
          return cur;
     }
 
-    public Node deleteHelper(Node z) {
-        if (z != null) {
-            if (z.getLeft() == null && z.getRight() == null) {
-                return null;
-            }
-            if (z.getLeft() != null && z.getRight() != null) {
-                Node inOrderSuccessor = deleteInOrderSuccessorDup(z);
-            } else if (z.getLeft() != null) {
-                // case one
-                z = z.getLeft();
-            } else {
-                // case two
-                z = z.getRight();
-            }
-        }
-        return z;
-    }
-
-    public Node deleteInOrderSuccessorDup(Node z) {
-        Node parent = z;
-        z = z.getRight();
-        while (z.getLeft() != null) {
-            parent = z;
-            z = z.getLeft();
-        }
-        if (z.getLeft() == null) {
-            parent.setRight(z.getRight());
-        } else {
-            parent.setLeft(z.getRight());
-        }
-        z.setRight(null);
-        return z;
-    }
 
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps
