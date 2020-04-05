@@ -35,26 +35,17 @@ public class IntervalTreapTest2 {
         TN = null;
     }
 
-    @Test
-    public void testMini() {
-        scanConstruct("mini_1.txt");
-        for (Interval i : TP) {
-            System.out.println("mini test, i: " + i.getLow());
-            assertNotNull(it1.intervalSearch(i));
-        }
-        for (Interval j : TN) {
-            System.out.println("mini test, j: " + j.getLow());
-            assertNull(it1.intervalSearch(j));
-        }
-        testTreapStructure(it1);
-    }
 
     @Test
     public void testSmall() {
-        scanConstruct("small_1.txt");
+
+        scanConstruct("src/small_1.txt");
+        int count = 0;
         for (Interval i : TP) {
-            System.out.println("small test, i: " + i.getLow());
-            assertNotNull(it1.intervalSearch(i));
+            Node test = it1.intervalSearch(i);
+            assertNotNull(test);
+            System.out.println(test.getKey() + " num: " + count);
+            count++;
         }
         for (Interval j : TN) {
             System.out.println("small test, j: " + j.getLow());
@@ -66,8 +57,12 @@ public class IntervalTreapTest2 {
     @Test
     public void testMedium() {
         scanConstruct("src/medium_1.txt");
+        int count = 0;
         for (Interval i : TP) {
-            assertNotNull(it1.intervalSearch(i));
+            Node test = it1.intervalSearch(i);
+            assertNotNull(test);
+            System.out.println(test.getKey() + " num: " + count);
+            count++;
         }
         for (Interval j : TN) {
             assertNull(it1.intervalSearch(j));
