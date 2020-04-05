@@ -97,9 +97,9 @@ public class IntervalTreap {
         }
         size++;
 
-        while (z.getPriority() < z.getParent().getPriority()) {
+        while (z.getParent()!= null && z.getPriority() < z.getParent().getPriority()) {
             if (z.getParent().getLeft() == z) {
-                rotateRight(z);
+                rotateRight(z.getParent());
                 Node r = z.getRight();
                 r.setIMax(r.getInterv().getHigh());
                 if (r.getRight() != null && r.getRight().getiMax() > r.getiMax()) {
@@ -109,7 +109,7 @@ public class IntervalTreap {
                     r.setIMax(r.getLeft().getiMax());
                 }
             } else if (z.getParent().getRight() == z) {
-                rotateLeft(z);
+                rotateLeft(z.getParent());
                 Node l = z.getLeft();
                 l.setIMax(l.getInterv().getHigh());
                 if (l.getRight() != null && l.getRight().getiMax() > l.getiMax()) {
