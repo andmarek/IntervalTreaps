@@ -146,6 +146,7 @@ public class IntervalTreap {
                 cur = cur.getRight();
             }
         }
+
         if (parent == null) {
             deleteHelper(cur);
         }
@@ -206,9 +207,9 @@ public class IntervalTreap {
         Node x = this.root;
         while (x != null && !(i.doesOverlap(x.getInterv()))) {
             if (x.getLeft() != null && x.getLeft().getiMax() >= i.getLow()) {
-                x = (x.getLeft());
+                x = x.getLeft();
             } else {
-                x = (x.getRight());
+                x = x.getRight();
             }
         }
         return x;
