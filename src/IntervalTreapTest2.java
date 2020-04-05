@@ -37,11 +37,13 @@ public class IntervalTreapTest2 {
 
     @Test
     public void testMini() {
-        scanConstruct("src/mini_1.txt");
+        scanConstruct("mini_1.txt");
         for (Interval i : TP) {
+            System.out.println("mini test, i: " + i.getLow());
             assertNotNull(it1.intervalSearch(i));
         }
         for (Interval j : TN) {
+            System.out.println("mini test, j: " + j.getLow());
             assertNull(it1.intervalSearch(j));
         }
         testTreapStructure(it1);
@@ -49,11 +51,13 @@ public class IntervalTreapTest2 {
 
     @Test
     public void testSmall() {
-        scanConstruct("src/small_1.txt");
+        scanConstruct("small_1.txt");
         for (Interval i : TP) {
+            System.out.println("small test, i: " + i.getLow());
             assertNotNull(it1.intervalSearch(i));
         }
         for (Interval j : TN) {
+            System.out.println("small test, j: " + j.getLow());
             assertNull(it1.intervalSearch(j));
         }
         testTreapStructure(it1);
