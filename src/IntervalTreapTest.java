@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.swing.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -109,7 +112,6 @@ class IntervalTreapTest {
         treap3.intervalInsert(n9);
         treap3.intervalInsert(n10);
         assertEquals("[0],[5],[6],[8],[15],[16],[17],[19],[25],[26],", treap3.printInOrder(treap3.getRoot(), ""));
-
 
     }
 

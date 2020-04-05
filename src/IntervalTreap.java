@@ -65,7 +65,7 @@ public class IntervalTreap {
 
         while (cur != null) {
             prev = cur;
-            if (z.getKey() <= cur.getKey()) {
+            if (z.getKey() < cur.getKey()) {
                 // updates the parents iMax
                 if (z.getiMax() > cur.getiMax()) {
                     cur.setIMax(z.getiMax());
