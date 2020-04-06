@@ -146,7 +146,7 @@ public class IntervalTreap {
 
         // Case 1: it's a fucking LEAF.
         if (cur.getRight() == null && cur.getLeft() == null) {
-            if (cur == this.root)  {
+            if (cur == this.root) {
                 cur = null;
             } else if (parent.getLeft() == cur) {
                parent.setLeft(null);
