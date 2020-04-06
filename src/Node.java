@@ -2,23 +2,26 @@ import java.util.Random;
 
 public class Node {
     private Interval interval;
-    private int iMax, priority;
+    private int iMax, priority, height;
     private Node parent, left, right;
 
     public Node() {
         iMax = 0;
         priority = 0;
+        height = 0;
         parent = null;
         left = null;
         right = null;
         interval = null;
+
     }
 
     //edge case Interval is empty?
-    public Node(Interval interval){
+    public Node(Interval interval) {
         Random rand = new Random();
         this.interval = interval;
         iMax = interval.getHigh();
+        height = 0;
         parent = null;
         left = null;
         right = null;
@@ -28,6 +31,14 @@ public class Node {
 
     public int getiMax() {
         return iMax;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public Node getParent() {
@@ -51,7 +62,7 @@ public class Node {
     }
 
     public int getKey() {
-       return this.getInterv().getLow();
+        return this.getInterv().getLow();
     }
 
     public void setIMax(int iMax) {

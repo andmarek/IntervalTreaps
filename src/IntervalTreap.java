@@ -45,7 +45,7 @@ public class IntervalTreap {
      * @return an integer representing the height of the tree
      */
     int getHeight() {
-        return 0;
+        return heightHelper(this.getRoot(), 0);
     }
 
     /**
@@ -307,7 +307,7 @@ public class IntervalTreap {
         }
     }
 
-    public void updateIMax(Node u){
+    public void updateIMax(Node u) {
         u.setIMax(u.getInterv().getHigh());
         if (u.getRight() != null && u.getRight().getiMax() > u.getiMax()) {
             u.setIMax(u.getRight().getiMax());
@@ -315,5 +315,22 @@ public class IntervalTreap {
         if (u.getLeft() != null && u.getLeft().getiMax() > u.getiMax()) {
             u.setIMax(u.getLeft().getiMax());
         }
+    }
+
+    public int heightHelper(Node n, int height) {
+        if (n != null) {
+            if (n.getRight() != null && n.getLeft() != null) {
+                height++;
+                return Math.max(heightHelper(n.getRight(), height), heightHelper(n.getLeft(), height));
+            } else if (n.getLeft() != null && n.getRight() == null) {
+                height++;
+                return heightHelper(n.getLeft(), height);
+            } else if (n.getRight() != null && n.getLeft() == null) {
+                height++;
+                return heightHelper(n.getRight(), height);
+            }
+
+        }
+        return height;
     }
 }
