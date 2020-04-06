@@ -647,6 +647,8 @@ class IntervalTreapTest3 {
         else {
             int i = testHeightRecursive(it.getRoot(), 0);
             int j = it.getHeight();
+            System.out.println("testHeightRecurisve " + i);
+            System.out.println("tree's actual height " + j);
             assert (j == i);
         }
     }

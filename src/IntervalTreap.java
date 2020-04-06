@@ -316,7 +316,6 @@ public class IntervalTreap {
             u.setIMax(u.getLeft().getiMax());
         }
     }
-
     public int heightHelper(Node n, int height) {
         if (n != null) {
             if (n.getRight() != null && n.getLeft() != null) {
