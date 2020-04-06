@@ -116,22 +116,19 @@ public class IntervalTreap {
      * Removes some element x from the database
      */
     public void intervalDelete(Node z) {
+        if (this.root == null)
+            return;
+
+        if (z == this.root) {
+            this.root = null;
+            size--;
+            return;
+        }
+
         Node cur = this.root;
         Node parent = null;
-
-        if (z == null) {
-            return;
-        }
-
-        if (this.root == null) {
-            return;
-        }
-
         int val = z.getKey();
 
-        if (cur == this.root) {
-            this.root = null;
-        }
         // We iterate until we find the node
         while (cur != null) {
             if (z == cur) {
@@ -149,7 +146,7 @@ public class IntervalTreap {
 
         // Case 1: it's a fucking LEAF.
         if (cur.getRight() == null && cur.getLeft() == null) {
-            if (cur.getParent() == null)  {
+            if (cur == this.root)  {
                 cur = null;
             } else if (parent.getLeft() == cur) {
                parent.setLeft(null);
@@ -157,7 +154,7 @@ public class IntervalTreap {
                 parent.setRight(null);
             }
             // Case 2: The node to be deleted has one child
-        } else if (cur.getRight() != null ^ cur.getLeft() != null) {
+        } else if (cur.getRight() == null ^ cur.getLeft() == null) {
             if (cur.getRight() != null) {
                 parent.setRight(cur.getRight());
             } else {
@@ -174,8 +171,6 @@ public class IntervalTreap {
                 parent.setRight(getInOrderSuccessor(cur));
             }
         }
-        // Update iMax pls
-
         // Rotations -- Duplicated code but whatever
         while (z != this.root && z.getPriority() < z.getParent().getPriority()) {
             if (z.getParent().getLeft() == z) {
@@ -223,7 +218,6 @@ public class IntervalTreap {
         }
         return cur;
     }
-
 
     /**
      * Returns a reference to an element x in the interval database such that x.interv overlaps

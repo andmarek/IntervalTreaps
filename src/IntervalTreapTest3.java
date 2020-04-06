@@ -330,16 +330,17 @@ class IntervalTreapTest3 {
         IntervalTreap it = new IntervalTreap();
         Random rand = new Random();
         ArrayList<Node> nodes = new ArrayList<Node>(numNodes);
-
+        int r1 =  0;
+        int r2 = 0;
         //Begin addition
         for (int i = 0; i < numNodes; i++) {
-            int r1 = rand.nextInt(),
+            r1 = rand.nextInt();
                     r2 = rand.nextInt();
             Node n = new Node(new Interval(Math.min(r1, r2), Math.max(r1, r2)));
             nodes.add(n);
             it.intervalInsert(n);
         }
-
+        System.out.println("R1 and R2 " + r1 + ", " + r2) ;
         checkIntevalTreap(it);
 
         //Shuffle the ArrayList so objects are deleted
@@ -582,7 +583,10 @@ class IntervalTreapTest3 {
      * @param it
      */
     void checkSize(IntervalTreap it) {
-        if (it.getRoot() == null) assert it.getSize() == 0;
+        if (it.getRoot() == null) {
+            System.out.println("it.getSize" + it.getSize());
+            assert it.getSize() == 0;
+        }
         int diff = it.getSize() - sizeOfSubtree(it.getRoot());
         if (diff != 0) {
             if (diff > 0) fail("expected size of interval treap is " + diff + " greater than actual size");
